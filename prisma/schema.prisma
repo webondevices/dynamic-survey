@@ -1,0 +1,20 @@
+// Prisma schema for Dynamic Survey Builder
+// Database: SQLite with better-sqlite3
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL") 
+}
+
+model Response {
+  id        Int      @id @default(autoincrement())
+  answers   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("responses") 
+}

@@ -140,3 +140,7 @@ vite.config.ts.timestamp-*
 
 # Claude
 CLAUDE.md
+
+# SQLite database files
+*.db
+*.db-journal
