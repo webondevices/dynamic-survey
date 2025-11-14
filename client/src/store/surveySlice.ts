@@ -4,12 +4,14 @@ interface SurveyState {
   answers: Record<string, unknown>;
   currentQuestionIndex: number;
   validationErrors: Record<string, string>;
+  surveySubmitted: boolean;
 }
 
 const initialState: SurveyState = {
   answers: {},
   currentQuestionIndex: 0,
   validationErrors: {},
+  surveySubmitted: false,
 };
 
 const surveySlice = createSlice({
@@ -34,6 +36,9 @@ const surveySlice = createSlice({
     setCurrentQuestionIndex: (state, action: PayloadAction<number>) => {
       state.currentQuestionIndex = action.payload;
     },
+    setSurveySubmitted: (state, action: PayloadAction<boolean>) => {
+      state.surveySubmitted = action.payload;
+    },
   },
 });
 
@@ -42,6 +47,7 @@ export const {
   setValidationError,
   clearValidationError,
   setCurrentQuestionIndex,
+  setSurveySubmitted,
 } = surveySlice.actions;
 
 export default surveySlice.reducer;
