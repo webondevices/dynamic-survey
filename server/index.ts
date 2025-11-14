@@ -1,10 +1,16 @@
 import Fastify, { FastifyError } from "fastify";
 import cors from "@fastify/cors";
+import fastifyStatic from "@fastify/static";
 import { ZodError } from "zod";
 import { surveyRoutes } from "./routes/survey.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 const HOST = process.env.HOST || "0.0.0.0";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const server = Fastify({
   logger: {
@@ -18,7 +24,21 @@ async function registerPlugins() {
     origin: true,
     credentials: true,
   });
+
+  // Register API routes first
   await server.register(surveyRoutes);
+
+  // Serve static files from the client build directory
+  const clientDistPath = path.join(__dirname, "../client/dist");
+  await server.register(fastifyStatic, {
+    root: clientDistPath,
+    prefix: "/",
+  });
+
+  // Catch-all route for SPA - must be registered after static files
+  server.setNotFoundHandler((_, reply) => {
+    reply.sendFile("index.html");
+  });
 }
 
 await registerPlugins();
