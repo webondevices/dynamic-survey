@@ -26,4 +26,16 @@ export async function surveyRoutes(server: FastifyInstance) {
       id: response.id,
     };
   });
+
+  // Get all submissions
+  server.get("/api/survey/submissions", async () => {
+    const submissions = await prisma.response.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    return submissions.map((s) => ({
+      id: s.id,
+      answers: JSON.parse(s.answers),
+      createdAt: s.createdAt,
+    }));
+  });
 }

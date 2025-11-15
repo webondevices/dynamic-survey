@@ -11,17 +11,15 @@ export function IntroPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <Card>
-        <div className={styles.content}>
-          <h1 className={styles.header}>Welcome to Our Survey</h1>
-          <p className={styles.paragraph}>
-            We'd love to hear your thoughts! This survey will take just a few
-            minutes to complete. Your feedback helps us improve our service.
-          </p>
-          <Button onClick={handleStartSurvey}>Start Survey</Button>
-        </div>
-      </Card>
-    </div>
+    <Card>
+      <div className={styles.content}>
+        <h1 className={styles.header}>Welcome to Our Survey</h1>
+        <p className={styles.paragraph}>
+          We'd love to hear your thoughts! This survey will take just a few
+          minutes to complete. Your feedback helps us improve our service.
+        </p>
+        <Button onClick={handleStartSurvey}>Start Survey</Button>
+      </div>
+    </Card>
   );
 }

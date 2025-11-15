@@ -1,14 +1,28 @@
 .button {
-  background: var(--primary);
-  color: var(--text-on-primary);
-  border: none;
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  border-radius: 6px;
+  font-weight: bold;
+  border-radius: 4px;
   cursor: pointer;
   transition: opacity 0.2s;
 }
 
 .button:hover {
   opacity: 0.75;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  background-color: lightgray;
+  cursor: not-allowed;
+}
+
+.primary {
+  background-color: var(--primary);
+  border: none;
+}
+
+.secondary {
+  background-color: white;
+  border: 2px solid var(--text);
 }

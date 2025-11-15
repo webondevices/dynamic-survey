@@ -7,6 +7,7 @@ import { queryClient } from "./lib/queryClient";
 import { IntroPage } from "./pages/IntroPage";
 import { SurveyPage } from "./pages/SurveyPage";
 import { CompletePage } from "./pages/CompletePage";
+import { SubmissionsPage } from "./pages/SubmissionsPage";
 import styles from "./App.module.css";
 
 function App() {
@@ -20,11 +21,14 @@ function App() {
               alt="Immersive Logo"
               className={styles.logo}
             />
-            <Routes>
-              <Route path="/" element={<IntroPage />} />
-              <Route path="/survey" element={<SurveyPage />} />
-              <Route path="/complete" element={<CompletePage />} />
-            </Routes>
+            <div className={styles.container}>
+              <Routes>
+                <Route path="/" element={<IntroPage />} />
+                <Route path="/survey" element={<SurveyPage />} />
+                <Route path="/complete" element={<CompletePage />} />
+                <Route path="/submissions" element={<SubmissionsPage />} />
+              </Routes>
+            </div>
           </BrowserRouter>
         </ThemeProvider>
       </QueryClientProvider>

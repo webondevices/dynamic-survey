@@ -39,3 +39,17 @@ export const useSubmitSurvey = () => {
     },
   });
 };
+
+// Fetch all submissions
+export const useSubmissions = () => {
+  return useQuery({
+    queryKey: ["submissions"],
+    queryFn: async () => {
+      const response = await fetch(`${API_BASE}/submissions`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch submissions");
+      }
+      return response.json();
+    },
+  });
+};
