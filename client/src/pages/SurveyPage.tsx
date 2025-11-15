@@ -10,6 +10,7 @@ import {
   setAnswer,
   setCurrentQuestionIndex,
   setSurveySubmitted,
+  setAiMessage,
 } from "../store/surveySlice";
 
 import styles from "../App.module.css";
@@ -75,12 +76,17 @@ export function SurveyPage() {
         setAnswer({ name: currentQuestion.name, value: currentQuestionValue })
       );
 
-      await submitMutation.mutateAsync({
+      const response = await submitMutation.mutateAsync({
         answers: {
           ...answers,
           [currentQuestion.name]: currentQuestionValue,
         } as Record<string, string | number | boolean | string[]>,
       });
+
+      if (response.message) {
+        dispatch(setAiMessage(response.message));
+      }
+
       dispatch(setSurveySubmitted(true));
       navigate("/complete");
     }
@@ -97,7 +103,7 @@ export function SurveyPage() {
       />
       <Card>
         <div className={styles.content}>
-          <h1 className={styles.header}>{config.title}</h1>
+          <h1>{config.title}</h1>
           <p className={surveyStyles.questionLabel}>
             Question {currentQuestionIndex + 1} of {totalQuestions}
           </p>

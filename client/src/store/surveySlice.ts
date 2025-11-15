@@ -5,6 +5,7 @@ interface SurveyState {
   currentQuestionIndex: number;
   validationErrors: Record<string, string>;
   surveySubmitted: boolean;
+  aiMessage: string | null;
 }
 
 const initialState: SurveyState = {
@@ -12,6 +13,7 @@ const initialState: SurveyState = {
   currentQuestionIndex: 0,
   validationErrors: {},
   surveySubmitted: false,
+  aiMessage: null,
 };
 
 const surveySlice = createSlice({
@@ -39,6 +41,9 @@ const surveySlice = createSlice({
     setSurveySubmitted: (state, action: PayloadAction<boolean>) => {
       state.surveySubmitted = action.payload;
     },
+    setAiMessage: (state, action: PayloadAction<string>) => {
+      state.aiMessage = action.payload;
+    },
   },
 });
 
@@ -48,6 +53,7 @@ export const {
   clearValidationError,
   setCurrentQuestionIndex,
   setSurveySubmitted,
+  setAiMessage,
 } = surveySlice.actions;
 
 export default surveySlice.reducer;

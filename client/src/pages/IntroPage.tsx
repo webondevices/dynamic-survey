@@ -13,8 +13,8 @@ export function IntroPage() {
   return (
     <Card>
       <div className={styles.content}>
-        <h1 className={styles.header}>Welcome to Our Survey</h1>
-        <p className={styles.paragraph}>
+        <h1>Welcome to Our Survey</h1>
+        <p>
           We'd love to hear your thoughts! This survey will take just a few
           minutes to complete. Your feedback helps us improve our service.
         </p>
