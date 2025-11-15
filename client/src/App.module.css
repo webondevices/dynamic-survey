@@ -24,7 +24,19 @@
   margin-bottom: 1rem;
 }
 
+@media (max-width: 768px) {
+  .header {
+    font-size: 1.75rem;
+  }
+}
+
 .paragraph {
   font-size: 1.125rem;
   margin-bottom: 2rem;
+}
+
+.themeToggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1rem;
 }

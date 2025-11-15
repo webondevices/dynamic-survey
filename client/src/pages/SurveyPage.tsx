@@ -98,7 +98,7 @@ export function SurveyPage() {
       <Card>
         <div className={styles.content}>
           <h1 className={styles.header}>{config.title}</h1>
-          <p>
+          <p className={surveyStyles.questionLabel}>
             Question {currentQuestionIndex + 1} of {totalQuestions}
           </p>
 

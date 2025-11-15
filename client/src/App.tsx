@@ -17,8 +17,8 @@ function AppContent() {
   return (
     <BrowserRouter>
       {context?.toggleTheme && (
-        <Button onClick={context.toggleTheme} style={{ position: 'fixed', top: '1rem', right: '1rem' }}>
-          {context.theme === 'light' ? 'Dark' : 'Light'}
+        <Button onClick={context.toggleTheme} className={styles.themeToggle}>
+          {context.theme === "light" ? "Dark" : "Light"}
         </Button>
       )}
       <img
