@@ -7,12 +7,21 @@ export function SubmissionsPage() {
 
   return (
     <Card>
-      <div className={styles.content}>
+      <div className={styles.content} style={{ marginTop: "4rem" }}>
         <h1>Survey Submissions</h1>
         {submissions?.map((submission: any) => (
-          <div key={submission.id}>
-            <p>{new Date(submission.createdAt).toLocaleString()}</p>
-            <p>{JSON.stringify(submission.answers)}</p>
+          <div key={submission.id} style={{ marginBottom: "2rem" }}>
+            <pre>{new Date(submission.createdAt).toLocaleString()}</pre>
+            <pre
+              style={{
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+                overflowWrap: "break-word",
+                textAlign: "left",
+              }}
+            >
+              {JSON.stringify(submission.answers, null, 2)}
+            </pre>
           </div>
         ))}
       </div>

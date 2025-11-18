@@ -42,16 +42,23 @@ const InputWrapper = ({
   );
 };
 
-const useOtherOption = (value: FormValue) => {
-  const currentValues = (value as string[]) || [];
-  const otherEntry = currentValues.find((v) => v.startsWith("Other: "));
+const OTHER_PREFIX = "Other: ";
 
+const parseOtherOption = (values: string[]) => {
+  const otherEntry = values.find((v) => v.startsWith(OTHER_PREFIX));
   return {
-    values: currentValues,
-    hasOther: !!otherEntry || currentValues.includes("Other"),
-    otherText: otherEntry ? otherEntry.substring(7) : "",
-    otherEntry,
+    hasOther: !!otherEntry || values.includes("Other"),
+    otherText: otherEntry?.substring(OTHER_PREFIX.length) || "",
   };
+};
+
+const removeOtherValues = (values: string[]) =>
+  values.filter((v) => v !== "Other" && !v.startsWith(OTHER_PREFIX));
+
+const updateOtherValue = (values: string[], text: string) => {
+  const baseValues = removeOtherValues(values);
+  const otherValue = text ? `${OTHER_PREFIX}${text}` : "Other";
+  return [...baseValues, otherValue];
 };
 
 export function FormInput({
@@ -163,7 +170,22 @@ export function FormInput({
     }
 
     case "multiple_select_with_other": {
-      const { values, hasOther, otherText } = useOtherOption(value);
+      const values = (value as string[]) || [];
+      const { hasOther, otherText } = parseOtherOption(values);
+
+      const handleOptionChange = (option: string, checked: boolean) => {
+        if (option === "Other") {
+          onChange(
+            checked
+              ? [...removeOtherValues(values), "Other"]
+              : removeOtherValues(values)
+          );
+        } else {
+          onChange(
+            checked ? [...values, option] : values.filter((v) => v !== option)
+          );
+        }
+      };
 
       return (
         <div className={styles.inputGroup}>
@@ -177,30 +199,9 @@ export function FormInput({
                   name={question.name}
                   value={option}
                   checked={
-                    values.includes(option) || (option === "Other" && hasOther)
+                    option === "Other" ? hasOther : values.includes(option)
                   }
-                  onChange={(e) => {
-                    if (option === "Other") {
-                      if (e.target.checked) {
-                        onChange([
-                          ...values.filter((v) => !v.startsWith("Other: ")),
-                          "Other",
-                        ]);
-                      } else {
-                        onChange(
-                          values.filter(
-                            (v) => v !== "Other" && !v.startsWith("Other: ")
-                          )
-                        );
-                      }
-                    } else {
-                      if (e.target.checked) {
-                        onChange([...values, option]);
-                      } else {
-                        onChange(values.filter((v) => v !== option));
-                      }
-                    }
-                  }}
+                  onChange={(e) => handleOptionChange(option, e.target.checked)}
                 />
                 {option}
               </label>
@@ -210,16 +211,9 @@ export function FormInput({
                 type="text"
                 placeholder="Please specify..."
                 value={otherText}
-                onChange={(e) => {
-                  const withoutOther = values.filter(
-                    (v) => v !== "Other" && !v.startsWith("Other: ")
-                  );
-                  onChange(
-                    e.target.value
-                      ? [...withoutOther, `Other: ${e.target.value}`]
-                      : [...withoutOther, "Other"]
-                  );
-                }}
+                onChange={(e) =>
+                  onChange(updateOtherValue(values, e.target.value))
+                }
                 className={styles.input}
               />
             )}
